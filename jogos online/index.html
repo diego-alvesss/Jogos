@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Games Studio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Press Start 2P', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Background animado com grid */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: grid-move 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid #00ff00;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Menu Hamburguer */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #00ff00;
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Menu Lateral */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            border-left: 2px solid #00ff00;
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 80px 20px 20px;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #00ff00;
+            padding-left: 10px;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 100px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff00;
+            text-shadow: 
+                0 0 5px #00ff00,
+                0 0 10px #00ff00,
+                0 0 20px #00ff00;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            to { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        .hero h2 {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .pixel-art {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            background: 
+                linear-gradient(90deg, #00ff00 0%, #00ff00 10%, transparent 10%, transparent 20%,
+                #00ff00 20%, #00ff00 30%, transparent 30%, transparent 40%,
+                #00ff00 40%, #00ff00 50%, transparent 50%, transparent 60%,
+                #00ff00 60%, #00ff00 70%, transparent 70%, transparent 80%,
+                #00ff00 80%, #00ff00 90%, transparent 90%),
+                linear-gradient(0deg, #00ff00 0%, #00ff00 10%, transparent 10%, transparent 20%,
+                #00ff00 20%, #00ff00 30%, transparent 30%, transparent 40%,
+                #00ff00 40%, #00ff00 50%, transparent 50%, transparent 60%,
+                #00ff00 60%, #00ff00 70%, transparent 70%, transparent 80%,
+                #00ff00 80%, #00ff00 90%, transparent 90%);
+            animation: pixelPulse 3s ease-in-out infinite;
+            border: 2px solid #00ff00;
+        }
+
+        @keyframes pixelPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover:before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            color: #000;
+            background: #00ff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #00ff00;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 255, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            color: #00ff00;
+        }
+
+        .feature-card p {
+            font-size: 0.6rem;
+            line-height: 1.4;
+            color: #cccccc;
+        }
+
+        /* Overlay para menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 0.8rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+        }
+
+        /* Partículas animadas */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff00;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">PIXEL GAMES STUDIO</div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-item">🐦 Flappy Bird</div>
+        <div class="menu-item">🐭 Bloqueie o Rato</div>
+    <div class="menu-item">🕹️ Pong Arcade</div>
+    <div class="menu-item">🐍 Snake Game</div>
+    <div class="menu-item">🏯 Papel, Tesoura, Torre</div>
+    <div class="menu-item">🧠 Jogo da Memória</div>
+    <div class="menu-item">🟪 Tetris</div>
+        <div class="menu-item">❌ Jogo da Velha</div>
+        <div class="menu-item">👾 Invasão do Espaço</div>
+        <div class="menu-item">🟡 Pacman</div>
+        <div class="menu-item">� Mario Dino</div>
+        <div class="menu-item">🔫 Doom</div>
+        <div class="menu-item">�🎮 Jogos de Aventura</div>
+        <div class="menu-item">🏃 Jogos de Plataforma</div>
+        <div class="menu-item">🧩 Jogos de Puzzle</div>
+        <div class="menu-item">🚀 Jogos de Ação</div>
+        <div class="menu-item">🎯 Jogos de Estratégia</div>
+        <div class="menu-item">📖 Sobre o Desenvolvedor</div>
+        <div class="menu-itezm">📞 Contato</div>
+        <div class="menu-item">📝 Jogo da Forca</div>
+        <div class="menu-item">🔍 Labirinto Hover</div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <h1>BEM-VINDO AO FUTURO DOS GAMES</h1>
+            <div class="pixel-art"></div>
+            <h2>
+                Explore um universo de jogos únicos criados com paixão e dedicação.<br>
+                Cada pixel foi cuidadosamente programado para oferecer experiências inesquecíveis.<br>
+                Entre no mundo retro-futurista dos games independentes!
+            </h2>
+            <!-- Botão EXPLORAR JOGOS removido -->
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-icon">🎮</span>
+                <h3>JOGOS ÚNICOS</h3>
+                <p>Cada jogo é desenvolvido do zero com mecânicas inovadoras e arte pixel original.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">💾</span>
+                <h3>ESTILO RETRÔ</h3>
+                <p>Nostalgia dos clássicos com tecnologia moderna para uma experiência autêntica.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <h3>SEMPRE ATUALIZANDO</h3>
+                <p>Novos jogos e atualizações regulares para manter a diversão sempre fresca.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Menu Hamburguer
+        const hamburger = document.getElementById('hamburger');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        // Adicionar eventos aos itens do menu
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const itemText = item.textContent;
+                
+                // Verificar se é um jogo específico
+                if (itemText.includes('Flappy Bird')) {
+                    window.location.href = 'games/flappy-bird/index.html';
+                } else if (itemText.includes('Bloqueie o Rato')) {
+                    window.location.href = 'games/block-the-rat/index.html';
+                } else if (itemText.includes('Pong Arcade')) {
+                    window.location.href = 'games/pong/index.html';
+                } else if (itemText.includes('Snake Game')) {
+                    window.location.href = 'games/snake/index.html';
+                } else if (itemText.includes('Papel, Tesoura, Torre')) {
+                    window.location.href = 'games/rps-tower/index.html';
+                } else if (itemText.includes('Jogo da Memória')) {
+                    window.location.href = 'games/memory/index.html';
+                } else if (itemText.includes('Tetris')) {
+                    window.location.href = 'games/tetris/index.html';
+                } else if (itemText.includes('Jogo da Velha')) {
+                    window.location.href = 'games/jogo-da-velha/index.html';
+                } else if (itemText.includes('Invasão do Espaço')) {
+                    window.location.href = 'games/space-invaders/index.html';
+                } else if (itemText.includes('Pacman')) {
+                    window.location.href = 'games/pacman/index.html';
+                } else if (itemText.includes('Mario Dino')) {
+                    window.location.href = 'games/mario-dino/index.html';
+                } else if (itemText.includes('Doom')) {
+                    window.location.href = 'games/doom/index.html';
+                } else if (itemText.includes('Jogo da Forca')) {
+                    window.location.href = 'games/forca/index.html';
+                } else {
+                    alert(`Seção "${itemText}" será implementada em breve!`);
+                }
+                closeMenu();
+            });
+        });
+
+        // Efeito de partículas
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { 
+                    transform: 'translateY(0px) scale(0)',
+                    opacity: 0 
+                },
+                { 
+                    transform: `translateY(-${window.innerHeight + 100}px) scale(1)`,
+                    opacity: 1 
+                },
+                { 
+                    transform: `translateY(-${window.innerHeight + 200}px) scale(0)`,
+                    opacity: 0 
+                }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            animation.onfinish = () => {
+                particle.remove();
+            };
+        }
+
+        // Criar partículas periodicamente
+        setInterval(createParticle, 500);
+
+        // Efeito de digitação no título
+        const title = document.querySelector('.hero h1');
+        const originalText = title.textContent;
+        
+        function typeWriter() {
+            title.textContent = '';
+            let i = 0;
+            
+            const interval = setInterval(() => {
+                title.textContent += originalText.charAt(i);
+                i++;
+                
+                if (i >= originalText.length) {
+                    clearInterval(interval);
+                }
+            }, 100);
+        }
+
+        // Iniciar efeito de digitação após carregamento
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Efeito de hover nas feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#ffffff';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#00ff00';
+            });
+        });
+    </script>
+</body>
+</html>

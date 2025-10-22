@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha - IA Adaptativa</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            image-rendering: pixelated;
+        }
+
+        .container {
+            text-align: center;
+            background: #000000;
+            padding: 30px;
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 20px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #00ff00;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: #000000;
+            border: 2px solid #00ff00;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.5em;
+            color: #00ff00;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 30px auto;
+            max-width: 360px;
+            padding: 10px;
+            background: #000000;
+            border: 4px solid #00ff00;
+            box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: #000000;
+            border: 3px solid #00ff00;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #00ff00;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-shadow: 0 0 10px #00ff00;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .cell:hover:not(:disabled) {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px #00ff00, inset 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .cell:disabled {
+            cursor: not-allowed;
+        }
+
+        .cell.x {
+            animation: glowX 0.5s ease-in;
+        }
+
+        .cell.o {
+            animation: glowO 0.5s ease-in;
+        }
+
+        @keyframes glowX {
+            0% { 
+                text-shadow: 0 0 5px #00ff00;
+            }
+            50% { 
+                text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+            100% { 
+                text-shadow: 0 0 10px #00ff00;
+            }
+        }
+
+        @keyframes glowO {
+            0% { 
+                text-shadow: 0 0 5px #00ff00;
+            }
+            50% { 
+                text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+            100% { 
+                text-shadow: 0 0 10px #00ff00;
+            }
+        }
+
+        .message {
+            font-size: 0.7em;
+            font-weight: bold;
+            color: #00ff00;
+            margin: 20px 0;
+            min-height: 40px;
+            text-shadow: 0 0 5px #00ff00;
+            line-height: 1.5;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                text-shadow: 0 0 5px #00ff00;
+            }
+            50% { 
+                text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+        }
+
+        .btn-reset {
+            background: #000000;
+            color: #00ff00;
+            border: 3px solid #00ff00;
+            padding: 15px 30px;
+            font-size: 0.6em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #00ff00;
+            margin-top: 10px;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .btn-reset:hover {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 20px #00ff00, inset 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-reset:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1em;
+            }
+            .cell {
+                font-size: 2em;
+            }
+            .message {
+                font-size: 0.5em;
+            }
+            .btn-reset {
+                font-size: 0.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Jogo da Velha</h1>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Você</div>
+                <div class="stat-value" id="playerWins">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Empates</div>
+                <div class="stat-value" id="draws">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">IA</div>
+                <div class="stat-value" id="aiWins">0</div>
+            </div>
+        </div>
+
+        <div class="message" id="message">Sua vez! Você é X</div>
+        
+        <div class="board" id="board"></div>
+        
+        <button class="btn-reset" onclick="resetGame()">🔄 Novo Jogo</button>
+        
+        <div class="difficulty-indicator" id="difficultyMsg"></div>
+    </div>
+
+    <script>
+        const board = document.getElementById('board');
+        const message = document.getElementById('message');
+        const difficultyMsg = document.getElementById('difficultyMsg');
+        
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let consecutiveDraws = 0;
+        let easyMode = false;
+        
+        let stats = {
+            playerWins: 0,
+            aiWins: 0,
+            draws: 0
+        };
+
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        function initBoard() {
+            board.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('button');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                cell.addEventListener('click', handleCellClick);
+                board.appendChild(cell);
+            }
+        }
+
+        function handleCellClick(e) {
+            const index = e.target.dataset.index;
+            
+            if (gameState[index] !== '' || !gameActive || currentPlayer === 'O') {
+                return;
+            }
+
+            makeMove(index, 'X');
+            
+            if (gameActive) {
+                currentPlayer = 'O';
+                message.textContent = 'IA pensando...';
+                setTimeout(aiMove, 500);
+            }
+        }
+
+        function makeMove(index, player) {
+            gameState[index] = player;
+            const cell = board.children[index];
+            cell.textContent = player;
+            cell.classList.add(player.toLowerCase());
+            cell.disabled = true;
+
+            checkResult();
+        }
+
+        function aiMove() {
+            if (!gameActive) return;
+
+            let move;
+            
+            if (easyMode) {
+                move = getEasyMove();
+            } else {
+                move = getSmartMove();
+            }
+
+            makeMove(move, 'O');
+            
+            if (gameActive) {
+                currentPlayer = 'X';
+                message.textContent = 'Sua vez!';
+            }
+        }
+
+        function getSmartMove() {
+            // 1. Tentar vencer
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameState[a] === 'O' && gameState[b] === 'O' && gameState[c] === '') return c;
+                if (gameState[a] === 'O' && gameState[c] === 'O' && gameState[b] === '') return b;
+                if (gameState[b] === 'O' && gameState[c] === 'O' && gameState[a] === '') return a;
+            }
+
+            // 2. Bloquear vitória do jogador
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameState[a] === 'X' && gameState[b] === 'X' && gameState[c] === '') return c;
+                if (gameState[a] === 'X' && gameState[c] === 'X' && gameState[b] === '') return b;
+                if (gameState[b] === 'X' && gameState[c] === 'X' && gameState[a] === '') return a;
+            }
+
+            // 3. Priorizar centro
+            if (gameState[4] === '') return 4;
+
+            // 4. Criar oportunidades (cantos opostos)
+            const corners = [0, 2, 6, 8];
+            const oppositeCorners = {0: 8, 2: 6, 6: 2, 8: 0};
+            
+            for (let corner of corners) {
+                if (gameState[corner] === 'O' && gameState[oppositeCorners[corner]] === '') {
+                    return oppositeCorners[corner];
+                }
+            }
+
+            // 5. Ocupar canto disponível
+            const availableCorners = corners.filter(i => gameState[i] === '');
+            if (availableCorners.length > 0) {
+                return availableCorners[Math.floor(Math.random() * availableCorners.length)];
+            }
+
+            // 6. Qualquer posição disponível
+            const available = gameState.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function getEasyMove() {
+            // Modo fácil: 70% de chance de movimento aleatório, 30% de movimento inteligente
+            const random = Math.random();
+            
+            if (random < 0.7) {
+                // Movimento aleatório
+                const available = gameState.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+                return available[Math.floor(Math.random() * available.length)];
+            } else {
+                // Movimento semi-inteligente (apenas bloqueia vitórias óbvias)
+                for (let pattern of winPatterns) {
+                    const [a, b, c] = pattern;
+                    if (gameState[a] === 'X' && gameState[b] === 'X' && gameState[c] === '') return c;
+                    if (gameState[a] === 'X' && gameState[c] === 'X' && gameState[b] === '') return b;
+                    if (gameState[b] === 'X' && gameState[c] === 'X' && gameState[a] === '') return a;
+                }
+                
+                const available = gameState.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+                return available[Math.floor(Math.random() * available.length)];
+            }
+        }
+
+        function checkResult() {
+            let winner = null;
+
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                    winner = gameState[a];
+                    break;
+                }
+            }
+
+            if (winner) {
+                gameActive = false;
+                if (winner === 'X') {
+                    message.textContent = '🎉 Você venceu!';
+                    stats.playerWins++;
+                    consecutiveDraws = 0;
+                    easyMode = false;
+                    difficultyMsg.classList.remove('show');
+                } else {
+                    message.textContent = '😔 IA venceu!';
+                    stats.aiWins++;
+                    consecutiveDraws = 0;
+                    easyMode = false;
+                    difficultyMsg.classList.remove('show');
+                }
+                updateStats();
+                return;
+            }
+
+            if (!gameState.includes('')) {
+                gameActive = false;
+                consecutiveDraws++;
+                stats.draws++;
+                
+                if (consecutiveDraws >= 3) {
+                    message.textContent = '😅 Empate novamente! IA ficando mais fácil...';
+                    message.classList.add('empate-streak');
+                    easyMode = true;
+                    difficultyMsg.textContent = '⚠️ Modo Fácil Ativado - A IA vai facilitar para você!';
+                    difficultyMsg.classList.add('show');
+                } else {
+                    message.textContent = `🤝 Empate! (${consecutiveDraws}/3)`;
+                    message.classList.remove('empate-streak');
+                }
+                
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('playerWins').textContent = stats.playerWins;
+            document.getElementById('aiWins').textContent = stats.aiWins;
+            document.getElementById('draws').textContent = stats.draws;
+        }
+
+        function resetGame() {
+            gameState = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            message.textContent = 'Sua vez! Você é X';
+            message.classList.remove('empate-streak');
+            initBoard();
+        }
+
+        initBoard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Retro Arcade</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #00ff00;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px auto;
+            padding: 15px;
+            background: #000000;
+            border: 2px solid #00ff00;
+            max-width: 600px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.5em;
+            color: #00ff00;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1em;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .game-container {
+            position: relative;
+            margin: 20px auto;
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 20px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.1);
+            background: #000000;
+        }
+
+        canvas {
+            display: block;
+            background: #000000;
+        }
+
+        .controls {
+            margin-top: 20px;
+            font-size: 0.5em;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+            line-height: 1.8;
+        }
+
+        .btn-start {
+            background: #000000;
+            color: #00ff00;
+            border: 3px solid #00ff00;
+            padding: 15px 30px;
+            font-size: 0.7em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #00ff00;
+            margin-top: 15px;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .btn-start:hover {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 20px #00ff00, inset 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-start:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1em;
+            }
+            .controls {
+                font-size: 0.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PONG ARCADE</h1>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">SCORE</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">BALLS</div>
+                <div class="stat-value" id="balls">1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">LIVES</div>
+                <div class="stat-value" id="lives">3</div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+        </div>
+
+        <button class="btn-start" id="startBtn" onclick="startGame()">START GAME</button>
+
+        <div class="controls">
+            USE MOUSE TO MOVE PADDLE<br>
+            HIT GIFTS TO DOUBLE BALLS<br>
+            GIFTS SPAWN EVERY 5 SECONDS
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startBtn = document.getElementById('startBtn');
+
+        let gameRunning = false;
+        let score = 0;
+        let lives = 3;
+        let animationId;
+        let lastGiftTime = 0;
+
+        // Paddle
+        const paddle = {
+            x: canvas.width / 2 - 60,
+            y: canvas.height - 30,
+            width: 120,
+            height: 15,
+            speed: 0,
+            targetX: canvas.width / 2 - 60
+        };
+
+        // Balls array
+        let balls = [];
+
+        // Gifts array
+        let gifts = [];
+
+        // Mouse control
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            paddle.targetX = mouseX - paddle.width / 2;
+            
+            if (paddle.targetX < 0) paddle.targetX = 0;
+            if (paddle.targetX > canvas.width - paddle.width) {
+                paddle.targetX = canvas.width - paddle.width;
+            }
+        });
+
+        // Touch control for mobile
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const touchX = touch.clientX - rect.left;
+            paddle.targetX = touchX - paddle.width / 2;
+            
+            if (paddle.targetX < 0) paddle.targetX = 0;
+            if (paddle.targetX > canvas.width - paddle.width) {
+                paddle.targetX = canvas.width - paddle.width;
+            }
+        });
+
+        function createBall(x = canvas.width / 2, y = canvas.height / 2) {
+            // Ângulo sempre para baixo, nunca reto
+            const minAngle = Math.PI / 6; // 30 graus
+            const maxAngle = Math.PI * 5 / 6; // 150 graus
+            const angle = Math.random() * (maxAngle - minAngle) + minAngle;
+            const speed = 8; // velocidade aumentada
+            return {
+                x: x,
+                y: y,
+                dx: Math.cos(angle) * speed,
+                dy: Math.abs(Math.sin(angle) * speed), // sempre para baixo
+                radius: 6,
+                trail: []
+            };
+        }
+
+        function createGift() {
+            return {
+                x: Math.random() * (canvas.width - 30) + 15,
+                y: 50,
+                width: 30,
+                height: 30,
+                dy: 2,
+                active: true
+            };
+        }
+
+        function startGame() {
+            if (gameRunning) return;
+            
+            gameRunning = true;
+            score = 0;
+            lives = 3;
+            balls = [createBall()];
+            gifts = [];
+            lastGiftTime = Date.now();
+            startBtn.textContent = 'PLAYING...';
+            startBtn.disabled = true;
+            
+            updateStats();
+            gameLoop();
+        }
+
+        function updateStats() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('balls').textContent = balls.length;
+            document.getElementById('lives').textContent = lives;
+        }
+
+        function drawPaddle() {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#00ff00';
+            ctx.fillStyle = '#00ff00';
+            ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+            
+            // Border effect
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
+            ctx.shadowBlur = 0;
+        }
+
+        function drawBall(ball) {
+            // Trail effect
+            ball.trail.push({x: ball.x, y: ball.y});
+            if (ball.trail.length > 5) ball.trail.shift();
+            
+            ball.trail.forEach((pos, index) => {
+                const alpha = (index + 1) / ball.trail.length * 0.5;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00ff00';
+                ctx.fillStyle = `rgba(0, 255, 0, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, ball.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Main ball
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#00ff00';
+            ctx.fillStyle = '#00ff00';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawGift(gift) {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#00ff00';
+            
+            // Gift box
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(gift.x, gift.y, gift.width, gift.height);
+            
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(gift.x, gift.y, gift.width, gift.height);
+            
+            // Ribbon
+            ctx.beginPath();
+            ctx.moveTo(gift.x + gift.width / 2, gift.y);
+            ctx.lineTo(gift.x + gift.width / 2, gift.y + gift.height);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(gift.x, gift.y + gift.height / 2);
+            ctx.lineTo(gift.x + gift.width, gift.y + gift.height / 2);
+            ctx.stroke();
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function updatePaddle() {
+            // Paddle mais rápido
+            paddle.x += (paddle.targetX - paddle.x) * 0.35;
+        }
+
+        function updateBalls() {
+            balls.forEach((ball, index) => {
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+
+                // Wall collision
+                if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                    ball.dx = -ball.dx;
+                }
+
+                // Top collision
+                if (ball.y - ball.radius < 0) {
+                    // Ao bater no topo, sempre volta para baixo
+                    ball.dy = Math.abs(ball.dy);
+                }
+
+                // Paddle collision
+                if (ball.y + ball.radius > paddle.y && 
+                    ball.y - ball.radius < paddle.y + paddle.height &&
+                    ball.x > paddle.x && 
+                    ball.x < paddle.x + paddle.width) {
+                    // Calculate angle based on where ball hits paddle
+                    const hitPos = (ball.x - paddle.x) / paddle.width;
+                    const angle = (hitPos - 0.5) * Math.PI / 2; // ângulo mais aberto
+                    const speed = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy) * 1.1; // aumenta velocidade
+                    ball.dx = Math.sin(angle) * speed;
+                    ball.dy = -Math.abs(Math.cos(angle) * speed);
+                    score += 10;
+                    updateStats();
+                }
+
+                // Ball lost
+                if (ball.y - ball.radius > canvas.height) {
+                    balls.splice(index, 1);
+                    if (balls.length === 0) {
+                        lives--;
+                        updateStats();
+                        if (lives > 0) {
+                            setTimeout(() => {
+                                balls.push(createBall());
+                            }, 1000);
+                        } else {
+                            gameOver();
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateGifts() {
+            const currentTime = Date.now();
+            // Spawn gift every 5 seconds
+            if (currentTime - lastGiftTime > 5000) {
+                gifts.push(createGift());
+                lastGiftTime = currentTime;
+            }
+            gifts.forEach((gift, gIndex) => {
+                if (!gift.active) return;
+                gift.y += gift.dy;
+                // Check collision with paddle
+                if (gift.y + gift.height > paddle.y && 
+                    gift.y < paddle.y + paddle.height &&
+                    gift.x + gift.width > paddle.x && 
+                    gift.x < paddle.x + paddle.width) {
+                    // Adiciona só uma bola extra
+                    balls.push(createBall(gift.x + gift.width / 2, paddle.y - 10));
+                    score += 50;
+                    gift.active = false;
+                    gifts.splice(gIndex, 1);
+                    updateStats();
+                }
+                // Remove if out of screen
+                if (gift.y > canvas.height) {
+                    gifts.splice(gIndex, 1);
+                }
+            });
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            cancelAnimationFrame(animationId);
+            
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#00ff00';
+            ctx.fillStyle = '#00ff00';
+            ctx.font = '40px "Press Start 2P"';
+            ctx.textAlign = 'center';
+            ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 30);
+            
+            ctx.font = '20px "Press Start 2P"';
+            ctx.fillText(`SCORE: ${score}`, canvas.width / 2, canvas.height / 2 + 30);
+            
+            startBtn.textContent = 'RESTART';
+            startBtn.disabled = false;
+            ctx.shadowBlur = 0;
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            // Clear canvas
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid effect
+            ctx.strokeStyle = 'rgba(0, 255, 0, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            updatePaddle();
+            updateBalls();
+            updateGifts();
+
+            drawPaddle();
+            balls.forEach(ball => drawBall(ball));
+            gifts.forEach(gift => drawGift(gift));
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Initial setup
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#00ff00';
+        ctx.fillStyle = '#00ff00';
+        ctx.font = '30px "Press Start 2P"';
+        ctx.textAlign = 'center';
+        ctx.fillText('PRESS START', canvas.width / 2, canvas.height / 2);
+        ctx.shadowBlur = 0;
+    </script>
+</body>
+</html>

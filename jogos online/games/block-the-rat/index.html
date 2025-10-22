@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloqueie o Rato - Pixel Games Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <a href="../../index.html" class="back-button">← VOLTAR</a>
+            <div class="game-title">BLOQUEIE O RATO</div>
+            <div class="game-stats">
+                <div class="moves">MOVIMENTOS: <span id="moves">0</span></div>
+                <div class="best">MELHOR: <span id="best">-</span></div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="game-board" id="gameBoard"></div>
+            
+            <div class="game-over-screen hidden" id="gameOverScreen">
+                <h2>RATO CAPTURADO!</h2>
+                <p>Movimentos usados: <span id="finalMoves">0</span></p>
+                <p>Seu melhor: <span id="bestScore">-</span></p>
+                <div class="rating" id="rating"></div>
+                <button id="playAgainBtn" class="play-again-btn">JOGAR NOVAMENTE</button>
+            </div>
+            
+            <div class="instructions" id="instructions">
+                <h3>COMO JOGAR</h3>
+                <p>🐭 O rato se move aleatoriamente a cada turno</p>
+                <p>🧱 Clique nas células vazias para criar muros</p>
+                <p>🎯 Objetivo: Bloquear completamente o rato</p>
+                <p>⭐ Tente usar o mínimo de movimentos!</p>
+                <button id="startBtn" class="start-btn">COMEÇAR</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-item">
+                <span class="key">CLIQUE</span>
+                <span class="action">Criar Muro</span>
+            </div>
+            <div class="control-item">
+                <span class="key">R</span>
+                <span class="action">Reiniciar</span>
+            </div>
+            <div class="control-item">
+                <span class="key">H</span>
+                <span class="action">Dica</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

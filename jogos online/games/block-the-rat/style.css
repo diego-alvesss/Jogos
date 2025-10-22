@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #00ff00;
+    font-family: 'Press Start 2P', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: 
+        radial-gradient(circle at 25% 25%, #001100 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #001100 0%, transparent 50%);
+}
+
+.game-container {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(0, 255, 0, 0.1);
+    border-bottom: 2px solid #00ff00;
+}
+
+.back-button {
+    color: #00ff00;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    border: 1px solid #00ff00;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: #00ff00;
+    color: #000;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.game-title {
+    font-size: 1rem;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.game-stats {
+    text-align: right;
+}
+
+.moves, .best {
+    font-size: 0.7rem;
+    margin: 2px 0;
+}
+
+.best {
+    color: #ffff00;
+}
+
+.game-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: 500px;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+    gap: 2px;
+    background: rgba(0, 255, 0, 0.1);
+    padding: 10px;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    width: 400px;
+    height: 400px;
+}
+
+.cell {
+    background: #002200;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.cell:hover {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+}
+
+.cell.wall {
+    background: #00aa00;
+    cursor: not-allowed;
+    border: 2px solid #00ff00;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.cell.wall:after {
+    content: '🧱';
+    font-size: 0.8rem;
+}
+
+.cell.rat {
+    background: #ffaa00;
+    border: 2px solid #ff6600;
+    animation: ratPulse 1s infinite alternate;
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.8);
+}
+
+.cell.rat:after {
+    content: '🐭';
+    animation: ratWiggle 0.5s infinite alternate;
+}
+
+.cell.blocked {
+    background: #aa0000;
+    border: 2px solid #ff0000;
+    animation: blockedPulse 0.5s infinite;
+}
+
+.cell.hint {
+    background: rgba(255, 255, 0, 0.3);
+    border: 2px dashed #ffff00;
+    animation: hintBlink 1s infinite;
+}
+
+@keyframes ratPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+@keyframes ratWiggle {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
+@keyframes blockedPulse {
+    0%, 100% { background: #aa0000; }
+    50% { background: #ff0000; }
+}
+
+@keyframes hintBlink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+.instructions,
+.game-over-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid #00ff00;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    max-width: 90%;
+}
+
+.instructions h3,
+.game-over-screen h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.game-over-screen h2 {
+    color: #ffff00;
+    text-shadow: 0 0 10px #ffff00;
+}
+
+.instructions p,
+.game-over-screen p {
+    font-size: 0.6rem;
+    margin: 0.8rem 0;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+.rating {
+    font-size: 0.8rem;
+    margin: 1rem 0;
+    color: #ffff00;
+    text-shadow: 0 0 5px #ffff00;
+}
+
+.start-btn,
+.play-again-btn {
+    background: transparent;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    padding: 12px 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.start-btn:hover,
+.play-again-btn:hover {
+    background: #00ff00;
+    color: #000;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+.controls {
+    padding: 1rem;
+    background: rgba(0, 255, 0, 0.05);
+    border-top: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.control-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+    font-size: 0.6rem;
+}
+
+.key {
+    background: rgba(0, 255, 0, 0.2);
+    border: 1px solid #00ff00;
+    padding: 4px 8px;
+    border-radius: 3px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.action {
+    color: #cccccc;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Efeitos especiais */
+.wall-appear {
+    animation: wallAppear 0.3s ease-out;
+}
+
+@keyframes wallAppear {
+    0% { 
+        transform: scale(0) rotate(180deg); 
+        background: #ffff00;
+    }
+    50% { 
+        transform: scale(1.2) rotate(90deg); 
+        background: #00ff00;
+    }
+    100% { 
+        transform: scale(1) rotate(0deg); 
+        background: #00aa00;
+    }
+}
+
+.rat-move {
+    animation: ratMove 0.5s ease-in-out;
+}
+
+@keyframes ratMove {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.8) rotate(360deg); }
+    100% { transform: scale(1); }
+}
+
+.game-win {
+    animation: gameWin 1s ease-in-out;
+}
+
+@keyframes gameWin {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.05) rotate(2deg); }
+    75% { transform: scale(1.05) rotate(-2deg); }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .game-container {
+        margin: 10px;
+        max-width: none;
+    }
+    
+    .game-board {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .header {
+        padding: 0.5rem;
+    }
+    
+    .game-title {
+        font-size: 0.8rem;
+    }
+    
+    .back-button {
+        font-size: 0.6rem;
+        padding: 6px 10px;
+    }
+    
+    .moves, .best {
+        font-size: 0.6rem;
+    }
+    
+    .game-area {
+        padding: 1rem;
+    }
+    
+    .instructions,
+    .game-over-screen {
+        padding: 1.5rem;
+        margin: 0 10px;
+    }
+    
+    .cell:after {
+        font-size: 0.6rem;
+    }
+}

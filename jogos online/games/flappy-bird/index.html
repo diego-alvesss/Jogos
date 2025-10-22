@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Pixel Games Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <a href="../../index.html" class="back-button">← VOLTAR</a>
+            <div class="game-title">FLAPPY BIRD</div>
+            <div class="game-stats">
+                <div class="score">SCORE: <span id="score">0</span></div>
+                <div class="level">NÍVEL: <span id="level">1</span></div>
+            </div>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <canvas id="gameCanvas" width="400" height="600"></canvas>
+            
+            <div class="game-over-screen" id="gameOverScreen">
+                <h2>GAME OVER</h2>
+                <p>Score Final: <span id="finalScore">0</span></p>
+                <p>Melhor Score: <span id="bestScore">0</span></p>
+                <button id="restartBtn" class="restart-btn">JOGAR NOVAMENTE</button>
+            </div>
+            
+            <div class="start-screen" id="startScreen">
+                <h2>FLAPPY BIRD</h2>
+                <p>Pressione ESPAÇO para voar</p>
+                <p>Passe pelos túneis verdes!</p>
+                <p class="difficulty-info">A velocidade aumenta a cada 10 túneis!</p>
+                <button id="startBtn" class="start-btn">COMEÇAR</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-item">
+                <span class="key">ESPAÇO</span>
+                <span class="action">Voar</span>
+            </div>
+            <div class="control-item">
+                <span class="key">R</span>
+                <span class="action">Reiniciar</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
