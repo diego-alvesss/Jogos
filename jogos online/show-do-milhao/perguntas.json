@@ -1,0 +1,62 @@
+[
+    {
+        "pergunta": "Qual banda lançou o álbum 'Nevermind' em 1991?",
+        "opcoes": ["Nirvana", "Pearl Jam", "Guns N' Roses", "Metallica"],
+        "resposta": 0,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Qual foi o mascote da Copa do Mundo de 1994?",
+        "opcoes": ["Ciao", "Striker", "Pique", "Footix"],
+        "resposta": 1,
+        "dificuldade": 2
+    },
+    {
+        "pergunta": "Em que ano foi lançado o Windows 95?",
+        "opcoes": ["1993", "1994", "1995", "1996"],
+        "resposta": 2,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Qual filme ganhou o Oscar de Melhor Filme em 1994?",
+        "opcoes": ["Forrest Gump", "Pulp Fiction", "O Rei Leão", "Um Sonho de Liberdade"],
+        "resposta": 0,
+        "dificuldade": 2
+    },
+    {
+        "pergunta": "Qual era o nome do videogame lançado pela Sega em 1988?",
+        "opcoes": ["Mega Drive", "Master System", "Saturn", "Dreamcast"],
+        "resposta": 0,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Quem cantava 'Like a Virgin' nos anos 80?",
+        "opcoes": ["Madonna", "Cyndi Lauper", "Whitney Houston", "Cher"],
+        "resposta": 0,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Qual era o nome do personagem principal do seriado 'MacGyver'?",
+        "opcoes": ["Angus", "Jack", "Richard", "Michael"],
+        "resposta": 0,
+        "dificuldade": 2
+    },
+    {
+        "pergunta": "Qual grupo lançou 'We Are The World' em 1985?",
+        "opcoes": ["USA for Africa", "Queen", "U2", "Genesis"],
+        "resposta": 0,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Qual era o nome do computador pessoal lançado pela Apple em 1984?",
+        "opcoes": ["Macintosh", "Lisa", "Apple II", "Newton"],
+        "resposta": 0,
+        "dificuldade": 1
+    },
+    {
+        "pergunta": "Qual cantor brasileiro lançou 'Sozinho' em 1998?",
+        "opcoes": ["Caetano Veloso", "Djavan", "Roberto Carlos", "Fábio Jr."],
+        "resposta": 0,
+        "dificuldade": 2
+    }
+]

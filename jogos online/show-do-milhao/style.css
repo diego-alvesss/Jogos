@@ -1,0 +1,223 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    min-width: 100vw;
+    box-sizing: border-box;
+    background: repeating-linear-gradient(45deg, #0a0a40 0px, #0a0a40 16px, #1a1a60 16px, #1a1a60 32px);
+    color: #fff;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bgMove 8s linear infinite;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 128px 128px; }
+}
+.container {
+    width: 600px;
+    min-height: 700px;
+    background: #222288;
+    border: 8px solid #ffd700;
+    box-shadow: 0 0 0 12px #000, 0 0 32px #ffd700 inset;
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    image-rendering: pixelated;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    animation: pixelPop 1.2s cubic-bezier(.68,-0.55,.27,1.55) 1;
+}
+
+@keyframes pixelPop {
+    0% { transform: scale(0.7); filter: blur(8px); }
+    60% { transform: scale(1.1); filter: blur(0px); }
+    100% { transform: scale(1); filter: none; }
+}
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 18px;
+    color: #ffd700;
+    text-shadow: 0 0 8px #ffd700, 2px 2px 0 #000, 0 0 32px #fff;
+    letter-spacing: 2px;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    animation: titleAnim 1.5s cubic-bezier(.68,-0.55,.27,1.55) 1;
+}
+@keyframes titleAnim {
+    0% { opacity: 0; transform: scale(0.7); }
+    80% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+#prize {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    color: #00ff00;
+    background: #111;
+    border: 4px solid #00ff00;
+    border-radius: 0;
+    padding: 8px 0;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #00ff00 inset;
+    animation: prizeAnim 1s ease-in-out;
+}
+@keyframes prizeAnim {
+    0% { filter: brightness(2); }
+    100% { filter: brightness(1); }
+}
+#question {
+    font-size: 1.1em;
+    margin-bottom: 18px;
+    background: #1a1a60;
+    border: 4px solid #ffd700;
+    border-radius: 0;
+    padding: 12px;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #ffd700 inset;
+    animation: questionAnim 1s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes questionAnim {
+    0% { opacity: 0; transform: scale(0.8); }
+    80% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+#options {
+    width: 100%;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+#options button {
+    width: 100%;
+    padding: 18px 0;
+    font-size: 1em;
+    background: #222288;
+    color: #fff;
+    border: 4px solid #fff;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #fff inset;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    image-rendering: pixelated;
+    position: relative;
+    animation: optionAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+#options button:hover {
+    background: #ffd700;
+    color: #222288;
+    border-color: #ffd700;
+    box-shadow: 0 0 16px #ffd700 inset;
+}
+#options button:disabled {
+    background: #444;
+    color: #888;
+    border-color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+@keyframes optionAnim {
+    0% { opacity: 0; left: -32px; }
+    100% { opacity: 1; left: 0; }
+}
+    /* bloco antigo removido, agora só o novo body pixel art está presente */
+#helpers button {
+    padding: 12px 18px;
+    font-size: 1em;
+    background: #ffd700;
+    color: #222288;
+    border: 4px solid #222288;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #ffd700 inset;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    image-rendering: pixelated;
+    animation: helperAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+#helpers button:disabled {
+    background: #888;
+    color: #ccc;
+    border-color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+@keyframes helperAnim {
+    0% { opacity: 0; top: -32px; }
+    100% { opacity: 1; top: 0; }
+}
+#public-help {
+    margin: 18px 0;
+    background: #222288;
+    border: 4px solid #ffd700;
+    border-radius: 0;
+    padding: 12px;
+    color: #ffd700;
+    font-size: 1em;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #ffd700 inset;
+    animation: publicAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes publicAnim {
+    0% { opacity: 0; right: -32px; }
+    100% { opacity: 1; right: 0; }
+}
+#result {
+    font-size: 1.2em;
+    margin: 18px 0;
+    color: #ffd700;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    text-shadow: 0 0 8px #ffd700, 2px 2px 0 #000;
+    animation: resultAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes resultAnim {
+    0% { opacity: 0; bottom: -32px; }
+    100% { opacity: 1; bottom: 0; }
+}
+#next-btn {
+    padding: 16px 32px;
+    font-size: 1em;
+    background: #00ff00;
+    color: #222288;
+    border: 4px solid #222288;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 12px;
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    box-shadow: 0 0 8px #00ff00 inset;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    image-rendering: pixelated;
+    animation: nextAnim 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+#next-btn:hover {
+    background: #ffd700;
+    color: #222288;
+    border-color: #ffd700;
+    box-shadow: 0 0 16px #ffd700 inset;
+}
+@keyframes nextAnim {
+    0% { opacity: 0; top: 32px; }
+    100% { opacity: 1; top: 0; }
+}
+
+/* Pixel art border effect */
+.container {
+    outline: 4px dashed #fff;
+    outline-offset: 0px;
+    box-shadow: 0 0 0 8px #ffd700, 0 0 32px #000 inset;
+}

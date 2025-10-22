@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show do Milhão - Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Show do Milhão</h1>
+        <div id="prize">Prêmio atual: R$ <span id="prize-value">1.000</span></div>
+        <div id="question-area">
+            <div id="question"></div>
+            <div id="options"></div>
+        </div>
+        <div id="helpers">
+            <button id="help-public">Ajuda dos Publicitários</button>
+            <button id="help-eliminate">Eliminar 2 opções</button>
+            <button id="help-skip">Pular Pergunta (<span id="skips-left">3</span>)</button>
+        </div>
+        <div id="public-help" style="display:none;"></div>
+        <div id="result"></div>
+        <button id="next-btn" style="display:none;">Próxima Pergunta</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
