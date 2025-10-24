@@ -354,6 +354,8 @@
     <div class="menu-item">🟪 Tetris 🎲</div>
     <div class="menu-item">🪐 Asteroids</div>
     <div class="menu-item">😈 Diablo 1</div>
+    <div class="menu-item">🦔 Sonic</div>
+    <div class="menu-item">♟️ Xadrez</div>
     </div>
 
     <main>
@@ -434,6 +436,10 @@
                     if (confirm('Ao acessar o Diablo 1, clique em "Play Shareware" para jogar gratuitamente. Deseja continuar?')) {
                         window.location.href = 'https://d07riv.github.io/diabloweb/';
                     }
+                } else if (itemText.includes('Sonic')) {
+                    window.location.href = 'SONIC-HTML-master/SONIC-HTML-master/index.html';
+                } else if (itemText.includes('Xadrez')) {
+                    window.location.href = 'xadrez/index.html';
                 } else {
                     alert(`Seção "${itemText}" será implementada em breve!`);
                 }
