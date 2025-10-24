@@ -1,62 +1,42 @@
 [
-    {
-        "pergunta": "Qual banda lançou o álbum 'Nevermind' em 1991?",
-        "opcoes": ["Nirvana", "Pearl Jam", "Guns N' Roses", "Metallica"],
-        "resposta": 0,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Qual foi o mascote da Copa do Mundo de 1994?",
-        "opcoes": ["Ciao", "Striker", "Pique", "Footix"],
-        "resposta": 1,
-        "dificuldade": 2
-    },
-    {
-        "pergunta": "Em que ano foi lançado o Windows 95?",
-        "opcoes": ["1993", "1994", "1995", "1996"],
-        "resposta": 2,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Qual filme ganhou o Oscar de Melhor Filme em 1994?",
-        "opcoes": ["Forrest Gump", "Pulp Fiction", "O Rei Leão", "Um Sonho de Liberdade"],
-        "resposta": 0,
-        "dificuldade": 2
-    },
-    {
-        "pergunta": "Qual era o nome do videogame lançado pela Sega em 1988?",
-        "opcoes": ["Mega Drive", "Master System", "Saturn", "Dreamcast"],
-        "resposta": 0,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Quem cantava 'Like a Virgin' nos anos 80?",
-        "opcoes": ["Madonna", "Cyndi Lauper", "Whitney Houston", "Cher"],
-        "resposta": 0,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Qual era o nome do personagem principal do seriado 'MacGyver'?",
-        "opcoes": ["Angus", "Jack", "Richard", "Michael"],
-        "resposta": 0,
-        "dificuldade": 2
-    },
-    {
-        "pergunta": "Qual grupo lançou 'We Are The World' em 1985?",
-        "opcoes": ["USA for Africa", "Queen", "U2", "Genesis"],
-        "resposta": 0,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Qual era o nome do computador pessoal lançado pela Apple em 1984?",
-        "opcoes": ["Macintosh", "Lisa", "Apple II", "Newton"],
-        "resposta": 0,
-        "dificuldade": 1
-    },
-    {
-        "pergunta": "Qual cantor brasileiro lançou 'Sozinho' em 1998?",
-        "opcoes": ["Caetano Veloso", "Djavan", "Roberto Carlos", "Fábio Jr."],
-        "resposta": 0,
-        "dificuldade": 2
-    }
+    {"pergunta": "Qual banda lançou o álbum 'Nevermind' em 1991?", "opcoes": ["Nirvana", "Pearl Jam", "Guns N' Roses", "Metallica"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual foi o mascote da Copa do Mundo de 1994?", "opcoes": ["Ciao", "Striker", "Pique", "Footix"], "resposta": 1, "dificuldade": 2},
+    {"pergunta": "Em que ano foi lançado o Windows 95?", "opcoes": ["1993", "1994", "1995", "1996"], "resposta": 2, "dificuldade": 1},
+    {"pergunta": "Quem cantava 'Like a Virgin' nos anos 80?", "opcoes": ["Madonna", "Cyndi Lauper", "Whitney Houston", "Cher"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou 'We Are The World' em 1985?", "opcoes": ["USA for Africa", "Queen", "U2", "Genesis"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo musical ficou famoso com a música 'Take On Me' em 1985?", "opcoes": ["A-ha", "Duran Duran", "Tears for Fears", "The Cure"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual console foi lançado pela Nintendo em 1990 no Brasil?", "opcoes": ["Super Nintendo", "NES", "Game Boy", "Nintendo 64"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Quem interpretou Marty McFly em 'De Volta para o Futuro'?", "opcoes": ["Michael J. Fox", "Tom Hanks", "Matthew Broderick", "Keanu Reeves"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor lançou o hit 'Billie Jean' em 1983?", "opcoes": ["Michael Jackson", "Prince", "Lionel Richie", "George Michael"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do videogame portátil lançado pela Nintendo em 1989?", "opcoes": ["Game Boy", "Game Gear", "Atari Lynx", "Neo Geo Pocket"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do personagem principal do seriado 'MacGyver'?", "opcoes": ["Angus", "Jack", "Richard", "Michael"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual grupo lançou o álbum 'The Joshua Tree' em 1987?", "opcoes": ["U2", "Queen", "The Police", "Genesis"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do programa infantil apresentado por Xuxa nos anos 80?", "opcoes": ["Xou da Xuxa", "Clube da Criança", "TV Colosso", "Balão Mágico"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual filme de 1985 mostra um cientista e um adolescente viajando no tempo?", "opcoes": ["De Volta para o Futuro", "Curtindo a Vida Adoidado", "Os Goonies", "Karate Kid"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor brasileiro lançou 'Tempo Perdido' em 1986?", "opcoes": ["Renato Russo", "Cazuza", "Lulu Santos", "Herbert Vianna"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'Wannabe' em 1996?", "opcoes": ["Spice Girls", "Backstreet Boys", "NSYNC", "All Saints"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do personagem principal do desenho 'Caverna do Dragão'?", "opcoes": ["Hank", "Eric", "Presto", "Sheila"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual foi o primeiro filme da franquia Jurassic Park?", "opcoes": ["Jurassic Park", "O Mundo Perdido", "Jurassic Park III", "Jurassic World"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do robô do filme 'O Exterminador do Futuro' (1984)?", "opcoes": ["T-800", "R2-D2", "C-3PO", "HAL 9000"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual grupo lançou o álbum 'Bad' em 1987?", "opcoes": ["Michael Jackson", "Madonna", "Prince", "U2"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do programa de auditório apresentado por Silvio Santos nos anos 90?", "opcoes": ["Topa Tudo por Dinheiro", "Show do Milhão", "Porta da Esperança", "Qual é a Música?"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor lançou o hit 'Cazuza - Exagerado' em 1985?", "opcoes": ["Cazuza", "Renato Russo", "Lobão", "Lulu Santos"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do videogame lançado pela Sony em 1994?", "opcoes": ["PlayStation", "Sega Saturn", "Nintendo 64", "Dreamcast"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'Smells Like Teen Spirit' em 1991?", "opcoes": ["Nirvana", "Pearl Jam", "Soundgarden", "Alice in Chains"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do personagem principal do seriado 'Anos Incríveis'?", "opcoes": ["Kevin Arnold", "Paul Pfeiffer", "Wayne Arnold", "Brian Cooper"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual filme de 1990 mostra um garoto defendendo sua casa de ladrões?", "opcoes": ["Esqueceram de Mim", "Querida, Encolhi as Crianças", "Matilda", "Meu Primeiro Amor"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor lançou o hit 'Like a Prayer' em 1989?", "opcoes": ["Madonna", "Whitney Houston", "Cyndi Lauper", "Cher"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do grupo de pagode que lançou 'Domingo' em 1997?", "opcoes": ["Só Pra Contrariar", "Raça Negra", "Art Popular", "Katinguelê"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do personagem principal do desenho 'Doug'?", "opcoes": ["Doug Funnie", "Skeeter", "Roger", "Patti"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual grupo lançou o hit 'Losing My Religion' em 1991?", "opcoes": ["R.E.M.", "U2", "The Cure", "Radiohead"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do programa de auditório apresentado por Gugu nos anos 90?", "opcoes": ["Domingo Legal", "Viva a Noite", "Sabadão Sertanejo", "Passa ou Repassa"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor lançou o hit 'Tempo Perdido' em 1986?", "opcoes": ["Renato Russo", "Cazuza", "Lulu Santos", "Herbert Vianna"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'Enjoy the Silence' em 1990?", "opcoes": ["Depeche Mode", "Pet Shop Boys", "Erasure", "New Order"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do personagem principal do desenho 'He-Man'?", "opcoes": ["Adam", "Skeletor", "Mentor", "Gato Guerreiro"], "resposta": 0, "dificuldade": 2},
+    {"pergunta": "Qual cantor lançou o hit 'Careless Whisper' em 1984?", "opcoes": ["George Michael", "Phil Collins", "Bryan Adams", "Billy Idol"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'Sweet Child O' Mine' em 1987?", "opcoes": ["Guns N' Roses", "Bon Jovi", "Aerosmith", "Scorpions"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual era o nome do programa de auditório apresentado por Faustão nos anos 90?", "opcoes": ["Domingão do Faustão", "Perdidos na Noite", "Globo de Ouro", "Fantástico"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'With or Without You' em 1987?", "opcoes": ["U2", "The Police", "Queen", "Genesis"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual cantor lançou o hit 'Beat It' em 1982?", "opcoes": ["Michael Jackson", "Prince", "Lionel Richie", "George Michael"], "resposta": 0, "dificuldade": 1},
+    {"pergunta": "Qual grupo lançou o hit 'Every Breath You Take' em 1983?", "opcoes": ["The Police", "Queen", "Genesis", "U2"], "resposta": 0, "dificuldade": 1}
 ]
