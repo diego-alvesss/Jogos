@@ -13,17 +13,17 @@ import {
 import { FRAME_TIME, GAME_SPEED } from '../constants/game.js';
 import { Camera } from '../engine/Camera.js';
 import { EntityList } from '../engine/EntityList.js';
-import { Ken, Ryu } from '../entitites/fighters/index.js';
+import { Ken, Ryu } from '../entities/fighters/index.js';
 import {
 	HeavyHitSplash,
 	LightHitSplash,
 	MediumHitSplash,
 	Shadow,
-} from '../entitites/fighters/shared/index.js';
-import { Fireball } from '../entitites/fighters/special/Fireball.js';
-import { FpsCounter } from '../entitites/overlays/FpsCounter.js';
-import { StatusBar } from '../entitites/overlays/StatusBar.js';
-import { KenStage } from '../entitites/stage/KenStage.js';
+} from '../entities/fighters/shared/index.js';
+import { Fireball } from '../entities/fighters/special/Fireball.js';
+import { FpsCounter } from '../entities/overlays/FpsCounter.js';
+import { StatusBar } from '../entities/overlays/StatusBar.js';
+import { KenStage } from '../entities/stage/KenStage.js';
 import { gameState, resetGameState } from '../states/gameState.js';
 import { StartScene } from './StartScene.js';
 
