@@ -351,6 +351,7 @@
     <div class="menu-item">🏯 Papel, Tesoura, Torre</div>
     <div class="menu-item">🧠 Jogo da Memória</div>
     <div class="menu-item">🟪 Tetris</div>
+    <a class="menu-item" href="StreetFighter-main/StreetFighter-main/index.html">🥊 Street Fighter</a>
         <div class="menu-item">❌ Jogo da Velha</div>
         <div class="menu-item">👾 Invasão do Espaço</div>
     <a class="menu-item" href="pac/pacman.html">🟡 Pacman</a>
@@ -427,7 +428,6 @@
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
                 const itemText = item.textContent;
-                
                 // Verificar se é um jogo específico
                 if (itemText.includes('Flappy Bird')) {
                     window.location.href = 'games/flappy-bird/index.html';
@@ -455,6 +455,8 @@
                     window.location.href = 'games/doom/index.html';
                 } else if (itemText.includes('Jogo da Forca')) {
                     window.location.href = 'games/forca/index.html';
+                } else if (itemText.includes('Street Fighter')) {
+                    window.location.href = 'StreetFighter-main/StreetFighter-main/index.html';
                 } else {
                     alert(`Seção "${itemText}" será implementada em breve!`);
                 }
