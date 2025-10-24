@@ -4,6 +4,12 @@
 <head>
     <meta charset='UTF-8'>
     <style>
+        body{
+  padding: 25px;
+}
+.title {
+	color: #5C6AC4;
+}
         canvas {
             position: absolute;
             top: 45%;
@@ -509,6 +515,13 @@
         }
  
         init();
+        function showTime() {
+	document.getElementById('currentTime').innerHTML = new Date().toUTCString();
+}
+showTime();
+setInterval(function () {
+	showTime();
+}, 1000);
     </script>
  
 </body>
