@@ -348,9 +348,12 @@
     
     <div class="menu-item">🥊 Street Fighter</div>
     <div class="menu-item">👾 Pacman</div>
-        <div class="menu-item">🔫 Doom 💀</div>
+    <div class="menu-item">🔫 Doom 💀</div>
     <div class="menu-item">🎮 Show do Milhão</div>
-        <div class="menu-item">🟪 Tetris 🎲</div>
+    <div class="menu-item">👽 Space Invaders</div>
+    <div class="menu-item">🟪 Tetris 🎲</div>
+    <div class="menu-item">🪐 Asteroids</div>
+    <div class="menu-item">😈 Diablo 1</div>
     </div>
 
     <main>
@@ -423,6 +426,14 @@
                     window.location.href = 'DOOM/doom.html';
                 } else if (itemText.includes('Show do Milhão')) {
                     window.location.href = 'show-do-milhao/index.html';
+                } else if (itemText.includes('Space Invaders')) {
+                    window.location.href = 'SpaceInvaders-master/SpaceInvaders-master/index.html';
+                } else if (itemText.includes('Asteroids')) {
+                    window.location.href = 'Asteroids-main/Asteroids-main/index.html';
+                } else if (itemText.includes('Diablo 1')) {
+                    if (confirm('Ao acessar o Diablo 1, clique em "Play Shareware" para jogar gratuitamente. Deseja continuar?')) {
+                        window.location.href = 'https://d07riv.github.io/diabloweb/';
+                    }
                 } else {
                     alert(`Seção "${itemText}" será implementada em breve!`);
                 }
